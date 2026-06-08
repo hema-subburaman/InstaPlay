@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  background-color: #000b1f;
+  background-color: #031126;
   font-family: Arial, sans-serif;
 }
 
@@ -13,6 +13,25 @@ body {
   color: white;
 }
 
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 36px;
+  font-weight: 400;
+  color: white;
+  gap: 2px;
+  line-height: 1;
+}
+
+.highlight {
+  color: #ff5e62;
+}
+
+.play-icon {
+  width: 24px;
+  height: 24px;
+}
+
 .login-container {
   min-height: calc(100vh - 70px);
   display: flex;
@@ -22,13 +41,15 @@ body {
 
 .login-card {
   width: 42%;
-  font-family: Helvetica;
-  max-height: 552px;
   min-height: 378px;
   background: white;
   border-radius: 16px;
   padding: 3%;
   box-sizing: border-box;
+}
+
+.login-card h1 {
+  margin-top: 0;
 }
 
 .login-card input {
@@ -37,7 +58,7 @@ body {
   margin-bottom: 12px;
   border-radius: 16px;
   padding: 0 3%;
-  box-sizing: border-box;  
+  box-sizing: border-box;
   border: 1px solid rgba(0, 0, 0, 0.23);
 }
 
@@ -46,32 +67,40 @@ body {
   height: 56px;
   margin-top: 20px;
   border-radius: 16px;
-  padding: 12px;
   border: none;
   background: #ff7a63;
   color: white;
   cursor: pointer;
+  font-size: 16px;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  font-size: 36px;
-  font-weight: 400;
-  color: white;
-  gap: 2px;
-  font-family: Arial,sans-serif;
-  line-height: 1;
+/* Mobile */
+@media screen and (max-width: 768px) {
+  .header {
+    justify-content: center;
+    padding-left: 0;
+  }
+
+  .logo {
+    font-size: 28px;
+  }
+
+  .play-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .login-card {
+    width: 90%;
+    padding: 20px;
+    min-height: auto;
+  }
+
+  .login-card input {
+    height: 50px;
+  }
+
+  .login-card button {
+    height: 50px;
+  }
 }
-
-.play-icon {
-  width: 24px;
-  height: 24px;
-}
-
-.highlight {
-  color: #FF5E62;
-}
-
-
-
