@@ -1,8 +1,11 @@
+import "./styles/Login.css";
+import Login from "./pages/Login";
+
 function App(){
   return(
-    <div>
-      <h1>InstaPlay</h1>
-    </div>
+    <>
+    <Login />
+    </>
   );
 }
 export default App;
