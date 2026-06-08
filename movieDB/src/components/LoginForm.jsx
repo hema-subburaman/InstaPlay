@@ -5,7 +5,7 @@ function LoginForm(){
             <p>Sign in to your Self Service Portal</p>
             <input type="text" placeholder="Username" />
             <input type="password" placeholder="Password" />
-            <button>LOG IN</button>
+            <button onClick={handleLogin}>LOG IN</button>
         </div>
     );
 }

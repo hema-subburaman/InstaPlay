@@ -11,7 +11,7 @@ function Login(){
         <>
         <Header />
         <div className="login-container">
-            <LoginForm />
+            <LoginForm handleLogin = {handleLogin} />
         </div>
         
         </>
