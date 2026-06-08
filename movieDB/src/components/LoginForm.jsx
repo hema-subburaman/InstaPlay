@@ -1,4 +1,4 @@
-function LoginForm(){
+function LoginForm({ handleLogin }){
     return(
         <div className="login-card">
             <h1>Sign in</h1>

@@ -58,3 +58,172 @@ body {
   color: white;
   margin-top: 30px;
 }
+
+body {
+  margin: 0;
+  background-color: #031126;
+  font-family: Arial, sans-serif;
+}
+
+.navbar {
+  height: 70px;
+  background-color: #29456d;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 25px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 28px;
+  font-weight: bold;
+  color: white;
+}
+
+.highlight {
+  color: #ff6b5b;
+}
+
+.logo-text {
+  color: white;
+}
+
+.play-icon {
+  width: 24px;
+  height: 24px;
+  margin: 0 3px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.search-box input {
+  width: 350px;
+  height: 40px;
+  padding: 0 12px;
+
+  border: none;
+  outline: none;
+
+  background-color: #3d5378;
+  color: white;
+
+  border-radius: 4px 0 0 4px;
+}
+
+.search-box input::placeholder {
+  color: #d0d0d0;
+}
+
+.search-btn {
+  width: 50px;
+  height: 40px;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+  border-radius: 0 4px 4px 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+  padding: 0;
+}
+
+.search-btn img {
+  width: 43px;
+  height: 43px;
+  object-fit: contain;
+  display: block;
+  margin-right: auto;
+}
+
+.logout-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+  margin-left: 15px;
+}
+
+.logout-btn:hover {
+  color: #ff7a63;
+}
+
+.movie-card {
+  background-color: #1f3f73;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.movie-card img:first-child {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.movie-info {
+  padding: 10px;
+}
+
+.movie-info h4 {
+  margin: 0 0 8px;
+  color: white;
+}
+
+.rating-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.star-icon {
+  width: 14px !important;
+  height: 14px !important;
+}
+
+.play-btn {
+  width: 28px !important;
+  height: 28px !important;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.pagination button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.left,
+.right {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.arrow-img {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}

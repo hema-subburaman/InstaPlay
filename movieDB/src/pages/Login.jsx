@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 function Login(){
     const navigate = useNavigate();
     const handleLogin = () => {
+        console.log("Login button clicked");
         navigate("/home");
     };
     return(
