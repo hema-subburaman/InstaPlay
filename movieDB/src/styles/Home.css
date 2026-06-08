@@ -4,7 +4,6 @@ body {
   font-family: Arial, sans-serif;
 }
 
-/* Navbar */
 
 .navbar {
   height: 70px;
@@ -36,8 +35,6 @@ body {
   margin: 0 3px;
 }
 
-/* Search */
-
 .search-box {
   display: flex;
   align-items: center;
@@ -65,16 +62,19 @@ body {
   border: none;
   background: transparent;
   cursor: pointer;
-
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: -1;
+  padding: 0;
 }
 
 .search-btn img {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
+  width: 43px; 
+  height: 43px; 
+  object-fit: contain; 
+  display: block; 
+  margin-right: auto;
 }
 
 .logout-btn {
