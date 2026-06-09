@@ -3,6 +3,7 @@ import LoginForm from "../components/LoginForm";
 import "../styles/Login.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 
 function Login() {
   const navigate = useNavigate();
@@ -12,9 +13,10 @@ function Login() {
 
   const handleLogin = () => {
     if (username === "hema" && password === "1234") {
+      toast.success("Login Successful");
       navigate("/home");
     } else {
-      alert("Invalid Username or Password");
+      toast.error("Invalid Username or Password");
     }
   };
 

@@ -1,6 +1,15 @@
 import playIcon from "../assets/playIcon.svg";
 import search from "../assets/search.svg";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 function Navbar(){
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        toast.success("Logout Successful");
+        setTimeout(() => {
+            navigate("/", {replace: true});
+        }, 1000);
+    };
     return (
         <nav className="navbar">
             <div className="logo">
@@ -17,7 +26,7 @@ function Navbar(){
                 </button>
             </div>
 
-            <button className="logout-btn">
+            <button className="logout-btn" onClick={handleLogout}>
                 Logout
             </button>
         </nav>

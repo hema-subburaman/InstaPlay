@@ -4,6 +4,7 @@ function LoginForm({
   setUsername,
   setPassword,
   handleLogin,
+  error,
 }) {
   return (
     <div className="login-card">
@@ -23,7 +24,7 @@ function LoginForm({
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-
+      {error && <p className="error-message">{error}</p>}
       <button onClick={handleLogin}>
         LOG IN
       </button>
