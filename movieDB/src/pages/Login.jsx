@@ -10,9 +10,29 @@ function Login() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const[usernameError, setUsernameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   const handleLogin = () => {
+    setUsernameError("");
+    setPasswordError("");
+
+    let isValid = true;
+
+    if (!username.trim()) {
+      setUsernameError("Username required");
+      isValid = false;
+    }
+
+    if (!password.trim()) {
+      setPasswordError("Password required");
+      isValid = false;
+    }
+
+    if (!isValid) return;
+
     if (username === "hema" && password === "1234") {
+      localStorage.setItem("token", "true");
       toast.success("Login Successful");
       navigate("/home");
     } else {
@@ -31,6 +51,8 @@ function Login() {
           setUsername={setUsername}
           setPassword={setPassword}
           handleLogin={handleLogin}
+          usernameError={usernameError}
+          passwordError={passwordError}
         />
       </div>
     </>

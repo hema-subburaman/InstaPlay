@@ -13,11 +13,18 @@ function MovieDetails(){
 
     const navigate = useNavigate();
     const [showImage, setShowImage] = useState(false);
+    const handleLogoClick = () => {
+      const token = localStorage.getItem("token");
+
+      if(token === "true"){
+        navigate("/home");
+      }
+    };
     return(
 
         <div className="details-page">
         <header className="navbar2">
-        <div className="logo2">
+        <div className="logo2" onClick={handleLogoClick}>
           <span className="highlight2">I</span>
           <span>nsta Pl</span>
           <img src={playIcon} alt="play" className="logo-play2" />

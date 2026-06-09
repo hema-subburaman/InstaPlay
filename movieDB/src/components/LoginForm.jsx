@@ -4,6 +4,8 @@ function LoginForm({
   setUsername,
   setPassword,
   handleLogin,
+  usernameError,
+  passwordError,
   error,
 }) {
   return (
@@ -18,12 +20,20 @@ function LoginForm({
         onChange={(e) => setUsername(e.target.value)}
       />
 
+      {usernameError && (
+      <p className="error-text">{usernameError}</p>
+      )}
+
       <input
         type="password"
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
+
+      {passwordError && (
+      <p className="error-text">{passwordError}</p>
+      )}
       {error && <p className="error-message">{error}</p>}
       <button onClick={handleLogin}>
         LOG IN

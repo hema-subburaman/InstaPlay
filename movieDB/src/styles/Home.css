@@ -19,6 +19,8 @@ body {
   font-size: 28px;
   font-weight: bold;
   color: white;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .logo-text {

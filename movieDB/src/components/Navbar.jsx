@@ -5,6 +5,7 @@ import { toast } from "react-hot-toast";
 function Navbar(){
     const navigate = useNavigate();
     const handleLogout = () => {
+        localStorage.removeItem("token");
         toast.success("Logout Successful");
         setTimeout(() => {
             navigate("/", {replace: true});
