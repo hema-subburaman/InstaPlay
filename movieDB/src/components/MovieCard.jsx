@@ -1,7 +1,8 @@
 import starIcon from "../assets/images/Star.svg";
 import playbtn from "../assets/images/playbtn.svg";
-
+import { useNavigate } from "react-router-dom";
 function MovieCard({image, title, rating, stars}){
+    const navigate = useNavigate();
     return(
         <div className="movie-card">
         <img src={image} alt={title} />
@@ -21,7 +22,12 @@ function MovieCard({image, title, rating, stars}){
                 <span>{rating} / 5</span>
                 
             </div>
-            <img src= {playbtn} alt="play" className="play-btn" />
+            <img src= {playbtn} alt="play" className="play-btn" 
+            onClick={() => {
+                if(title === "The Godfather"){
+                    navigate("/movie");
+                }
+            }}/>
         </div>
         </div>
         </div>

@@ -3,6 +3,7 @@ import { Toaster } from "react-hot-toast";
 
 import Login from "./pages/Login";
 import Home from "./pages/Home";
+import MovieDetails from "./components/MovieDetails";
 
 
 function App(){
@@ -13,6 +14,7 @@ function App(){
     <Routes>
       <Route path = "/" element = {<Login/>} />
       <Route path = "/home" element = {<Home />}  />
+      <Route path="/movie" element = {<MovieDetails />}  />
     </Routes>
     </BrowserRouter>
     </>
