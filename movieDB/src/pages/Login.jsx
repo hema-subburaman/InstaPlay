@@ -10,8 +10,25 @@ function Login() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const[usernameError, setUsernameError] = useState("");
+  const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+
+  const handleUsernameChange = (e) => {
+  setUsername(e.target.value);
+
+  if (usernameError) {
+    setUsernameError("");
+  }
+  };
+
+  const handlePasswordChange = (e) => {
+  setPassword(e.target.value);
+
+  if (passwordError) {
+    setPasswordError("");
+  }
+  };
+
 
   const handleLogin = () => {
     setUsernameError("");
@@ -48,8 +65,8 @@ function Login() {
         <LoginForm
           username={username}
           password={password}
-          setUsername={setUsername}
-          setPassword={setPassword}
+          handleUsernameChange={handleUsernameChange}
+          handlePasswordChange={handlePasswordChange}
           handleLogin={handleLogin}
           usernameError={usernameError}
           passwordError={passwordError}

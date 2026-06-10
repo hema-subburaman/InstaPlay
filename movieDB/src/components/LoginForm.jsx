@@ -1,8 +1,8 @@
 function LoginForm({
   username,
   password,
-  setUsername,
-  setPassword,
+  handleUsernameChange,
+  handlePasswordChange,
   handleLogin,
   usernameError,
   passwordError,
@@ -20,7 +20,7 @@ function LoginForm({
         type="text"
         placeholder="Username"
         value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        onChange={handleUsernameChange}
       />
     
       {usernameError && (
@@ -32,7 +32,7 @@ function LoginForm({
         type="password"
         placeholder="Password"
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={handlePasswordChange}
       />
 
       {passwordError && (
