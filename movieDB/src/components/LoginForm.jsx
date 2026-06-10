@@ -15,18 +15,19 @@ function LoginForm({
     }} className="login-card">
       <h1>Sign in</h1>
       <p>Sign in to your Self Service Portal</p>
-
+    <div className="input-group">
       <input
         type="text"
         placeholder="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
-
+    
       {usernameError && (
       <p className="error-text">{usernameError}</p>
       )}
-
+    </div>
+    <div className="input-group">
       <input
         type="password"
         placeholder="Password"
@@ -37,6 +38,7 @@ function LoginForm({
       {passwordError && (
       <p className="error-text">{passwordError}</p>
       )}
+      </div>
       {error && <p className="error-message">{error}</p>}
       <button type="submit" >
         LOG IN
