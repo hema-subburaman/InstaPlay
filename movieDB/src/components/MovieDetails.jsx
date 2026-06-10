@@ -1,6 +1,7 @@
 import {useNavigate} from "react-router-dom";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
+import { useParams } from "react-router-dom";
 import "../styles/MovieDetails.css";
 import playIcon from "../assets/playIcon.svg";
 import playbtn from "../assets/images/playbtn.svg";
@@ -13,6 +14,7 @@ function MovieDetails(){
 
     const navigate = useNavigate();
     const [showImage, setShowImage] = useState(false);
+    const {movieId} = useParams();
     const handleLogoClick = () => {
       const token = localStorage.getItem("token");
 

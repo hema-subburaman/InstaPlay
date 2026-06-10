@@ -8,6 +8,10 @@ body {
   background: #000;
 }
 
+.movie-card{
+  cursor: pointer;
+}
+
 .navbar2 {
   height: 70px;
   background: #2f4b76;

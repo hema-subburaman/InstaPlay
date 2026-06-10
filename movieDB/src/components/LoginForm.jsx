@@ -9,7 +9,10 @@ function LoginForm({
   error,
 }) {
   return (
-    <div className="login-card">
+    <form onSubmit={(e) => {
+      e.preventDefault();
+      handleLogin();
+    }} className="login-card">
       <h1>Sign in</h1>
       <p>Sign in to your Self Service Portal</p>
 
@@ -35,10 +38,10 @@ function LoginForm({
       <p className="error-text">{passwordError}</p>
       )}
       {error && <p className="error-message">{error}</p>}
-      <button onClick={handleLogin}>
+      <button type="submit" >
         LOG IN
       </button>
-    </div>
+    </form>
   );
 }
 

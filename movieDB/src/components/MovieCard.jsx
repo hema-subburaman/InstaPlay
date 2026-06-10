@@ -1,10 +1,10 @@
 import starIcon from "../assets/images/Star.svg";
 import playbtn from "../assets/images/playbtn.svg";
 import { useNavigate } from "react-router-dom";
-function MovieCard({image, title, rating, stars}){
+function MovieCard({movieId, image, title, rating, stars}){
     const navigate = useNavigate();
     return(
-        <div className="movie-card">
+        <div className="movie-card" onClick={() => navigate(`/movie/${movieId}`)}>
         <img src={image} alt={title} />
         <div className="movie-info">
             <h4>{title}</h4>
@@ -23,11 +23,7 @@ function MovieCard({image, title, rating, stars}){
                 
             </div>
             <img src= {playbtn} alt="play" className="play-btn" 
-            onClick={() => {
-                if(title === "The Godfather"){
-                    navigate("/movie");
-                }
-            }}/>
+            />
         </div>
         </div>
         </div>
