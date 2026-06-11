@@ -1,8 +1,11 @@
 import playIcon from "../assets/playIcon.svg";
-import search from "../assets/search.svg";
+import searchIcon from "../assets/searchIcon.svg";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-function Navbar(){
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { SEARCH_API } from "../api/endpoint";
+function Navbar({setSearchResults}){
     const navigate = useNavigate();
     const handleLogout = () => {
         localStorage.removeItem("token");
@@ -11,6 +14,20 @@ function Navbar(){
             navigate("/", {replace: true});
         }, 1000);
     };
+
+    const [search, setSearch] = useState("");
+
+    const getSearchDetails = async() => {
+        if (!search.trim()) return;
+        try{
+            const response = await axios.get(`${SEARCH_API}&language=en-US&query=${search}&include_adult=false`);
+            setSearchResults(response.data.results || []);
+        }
+        catch(error){
+            console.log("error");
+        }
+    }
+
     return (
         <nav className="navbar">
             <div className="logo">
@@ -20,12 +37,15 @@ function Navbar(){
                 <span className="logo-text">y</span>
             </div>
 
-            <div className="search-box">
-                <input type="text" placeholder="Search movies" />
-                <button className="search-btn">
-                    <img src={search} alt="search" />
+            <form className="search-box" onSubmit={(e) => {
+                e.preventDefault();
+                getSearchDetails();
+            }}>
+                <input type="text" placeholder="Search movies" value={search} onChange={(e) => setSearch(e.target.value)}/>
+                <button className="search-btn" onClick={getSearchDetails}>
+                    <img src={searchIcon} alt="search"  />
                 </button>
-            </div>
+            </form>
 
             <button className="logout-btn" onClick={handleLogout}>
                 Logout

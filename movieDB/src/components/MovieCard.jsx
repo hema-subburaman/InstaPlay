@@ -1,10 +1,15 @@
+import { useEffect, useState } from "react";
 import starIcon from "../assets/images/Star.svg";
 import playbtn from "../assets/images/playbtn.svg";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 function MovieCard({movieId, image, title, rating, stars}){
     const navigate = useNavigate();
+
     return(
-        <div className="movie-card" onClick={() => navigate(`/movie/${movieId}`)}>
+        <div className="movie-card" onClick={() => 
+        navigate(
+            `/movie/${movieId}`)}>
         <img src={image} alt={title} />
         <div className="movie-info">
             <h4>{title}</h4>
@@ -26,6 +31,7 @@ function MovieCard({movieId, image, title, rating, stars}){
             />
         </div>
         </div>
+        
         </div>
     );
 }

@@ -1,5 +1,5 @@
 import {useNavigate} from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import "../styles/MovieDetails.css";
@@ -9,12 +9,16 @@ import bgImage from "../assets/images/image8.png";
 import backbtn from "../assets/images/backbtn.svg";
 import frame from "../assets/images/Frame.svg";
 import popup from "../assets/images/popup.png";
+import axios from "axios";
+import { MOVIEDETAILS_API } from "../api/endpoint";
 
 function MovieDetails(){
-
+  
     const navigate = useNavigate();
     const [showImage, setShowImage] = useState(false);
+    const [movie, setMovie] = useState(null);
     const {movieId} = useParams();
+    const [videos, setVideos] = useState([]);
     const handleLogoClick = () => {
       const token = localStorage.getItem("token");
 
@@ -22,6 +26,50 @@ function MovieDetails(){
         navigate("/home");
       }
     };
+
+    const getMovieDetails = async() => {
+      try{
+        const response = await axios.get(`${MOVIEDETAILS_API}/${movieId}?api_key=d0605f7c77a7e9ffd22f6f77c12e0f8f&language=en-US`);
+        
+        setMovie(response.data);
+      }
+      catch(error){
+        console.log("error");
+      }
+    }
+
+    const getMovieVideos =  async() => {
+      try{
+        const response = await axios.get(`${MOVIEDETAILS_API}/${movieId}/videos?api_key=d0605f7c77a7e9ffd22f6f77c12e0f8f&language=en-US`);
+       
+        setVideos(response.data.results);
+      }
+      catch(error){
+        console.log("error");
+      }
+    }
+
+    useEffect(() => {
+      getMovieDetails();
+      getMovieVideos();
+    },[]);
+
+    if (!movie) {
+    return <h2>Loading...</h2>;
+   }
+
+  const imageUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+  
+
+  const trailer = Array.isArray(videos)
+  ? 
+  videos.find(
+      (video) =>
+        video.site === "YouTube" &&
+        video.type === "Trailer"
+    )
+  : null;
+
     return(
 
         <div className="details-page">
@@ -40,35 +88,40 @@ function MovieDetails(){
                 <button className="back-btn" onClick={() => navigate(-1)}>
                     <img src={backbtn} alt="back-button" />
                 </button>
-                <h1>The Godfather</h1>
-                <p className="rating"> Rating: 4.65/5</p>
+                <h1>{movie.title}</h1>
+                <p className="rating"> Rating: {Math.round(movie.vote_average / 2)} / 5</p>
                 <p className="description">
-                    Don Vito Corleone, head of a mafia family, decides 
-                    to hand over his empire to his youngest son Michael. 
-                    However, his decision unintentionally puts the lives 
-                    of his loved ones in grave danger.
+                    {movie.overview}
                 </p>
 
                 <div className="info-row">
                    <span className="info-label">Release Date  </span>
                    
-                   <span className="info-value">1972</span>
+                   <span className="info-value">{movie.release_date}</span>
                 </div>
                 
                 <div className="info-row">
                    <span className="info-label">Original Language</span>
                    
-                   <span className="info-value">English, Spanish, French</span>
+                   <span className="info-value">{movie.original_language}</span>
                 </div>
 
                
             </div> 
              <div className="right-section">
 
-                <img src={bgImage} alt="Godfather" className="movie-image" />
+                <img src={imageUrl} alt={movie.title} className="movie-image" />
                     <img src={playbtn}alt="playbutton" className="playbutton" 
                     onClick={() => {
-                    toast.success("Opening Godfather...");
+                      if(trailer){
+                        window.open(
+                            `https://www.youtube.com/watch?v=${trailer.key}`,"_blank"
+                        );
+                      }
+                      else{
+                        toast.error("Trailer not available");
+                      }
+                    toast.success(`Opening ${movie.title}...`);
                     setShowImage(true)}
                     }/>
                 </div> 
@@ -83,8 +136,8 @@ function MovieDetails(){
             <img src={frame} alt="CloseButton" />
         </button>
       <img
-        src={popup}
-        alt="Godfather"
+        src={imageUrl}
+        alt={movie.title}
         className="popup-image"
       />
     </div>

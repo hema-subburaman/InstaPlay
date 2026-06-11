@@ -1,16 +1,26 @@
 import leftoutlined from "../assets/images/leftoutlined.svg";
 import rightoutlined from "../assets/images/rightoutlined.svg";
-function Pagination(){
+function Pagination({page, setPage}){
     return(
         <div className="pagination">
-            <button><img src={leftoutlined} alt="left" className="arrow-img"/></button>
-            <span>1</span>
-            <span>2</span>
-            <span>3</span>
-            <span>4</span>
-            <span>5</span>
-            <span>6</span>
-            <button><img src={rightoutlined} alt="right" className="arrow-img" /></button>
+            <button onClick={() => setPage(page - 1)}
+                disabled= {page === 1}>
+                <img src={leftoutlined} alt="left" className="arrow-img"/>
+            </button>
+            {[1,2,3,4,5,6].map((num) => (
+                <span
+                key={num}
+                onClick={() => setPage(num)}
+                className={page === num ? "active-page" : ""}
+                style={{cursor: "pointer"}}
+                >
+                    {num}
+                </span>
+            ))}
+            <button onClick={() => setPage(page + 1)}>
+                <img src={rightoutlined} alt="right" className="arrow-img" />
+            </button>
+            
         </div>
     );
 }

@@ -2,8 +2,11 @@ import Header from "../components/Header";
 import LoginForm from "../components/LoginForm";
 import "../styles/Login.css";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
+import { loginUser } from "../api/auth";
+import axios from "axios";
+import { TOKEN_API } from "../api/endpoint";
 
 function Login() {
   const navigate = useNavigate();
@@ -30,7 +33,7 @@ function Login() {
   };
 
 
-  const handleLogin = () => {
+  const handleLogin = async() => {
     setUsernameError("");
     setPasswordError("");
 
@@ -48,15 +51,33 @@ function Login() {
 
     if (!isValid) return;
 
-    if (username === "hema" && password === "1234") {
-      localStorage.setItem("token", "true");
-      toast.success("Login Successful");
-      navigate("/home");
-    } else {
-      toast.error("Invalid Username or Password");
-    }
+  try {
+    console.log("working");
+    const token = localStorage.getItem("TOKEN");
+  const data = await loginUser(username, password,token);
+  console.log(data,"hema");
+  localStorage.setItem("LOGIN",data.success);
+  toast.success("Login Successful");
+
+  navigate("/home");
+  } catch (error) {
+  toast.error("Invalid Username or Password");
+  }
   };
 
+  const getToken = async() => {
+    try{
+      const response = await axios.get(TOKEN_API);
+    console.log(response.data.request_token);
+    localStorage.setItem("TOKEN",response.data.request_token);
+    }
+    catch(error){
+      console.log(error);
+    }
+  }
+  useEffect(() => {
+    getToken();
+  },[]);
   return (
     <>
       <Header />
