@@ -10,7 +10,7 @@ import backbtn from "../assets/images/backbtn.svg";
 import frame from "../assets/images/Frame.svg";
 import popup from "../assets/images/popup.png";
 import axios from "axios";
-import { MOVIEDETAILS_API } from "../api/endpoint";
+import { MOVIEDETAILS_API, VIDEO_API } from "../api/endpoint";
 
 function MovieDetails(){
   
@@ -19,6 +19,7 @@ function MovieDetails(){
     const [movie, setMovie] = useState(null);
     const {movieId} = useParams();
     const [videos, setVideos] = useState([]);
+    const [trailerKey, setTrailerKey] = useState("");
     const handleLogoClick = () => {
       const token = localStorage.getItem("token");
 
@@ -40,9 +41,18 @@ function MovieDetails(){
 
     const getMovieVideos =  async() => {
       try{
-        const response = await axios.get(`${MOVIEDETAILS_API}/${movieId}/videos?api_key=d0605f7c77a7e9ffd22f6f77c12e0f8f&language=en-US`);
+        const response = await axios.get(`${VIDEO_API}${movieId}/videos?api_key=d0605f7c77a7e9ffd22f6f77c12e0f8f&language=en-US`);
        
         setVideos(response.data.results);
+        const trailer = response.data.results.find(
+      (video) =>
+        video.site === "YouTube" &&
+        video.type === "Trailer"
+    );
+
+    if (trailer) {
+      setTrailerKey(trailer.key);
+    }
       }
       catch(error){
         console.log("error");
@@ -61,14 +71,7 @@ function MovieDetails(){
   const imageUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
   
 
-  const trailer = Array.isArray(videos)
-  ? 
-  videos.find(
-      (video) =>
-        video.site === "YouTube" &&
-        video.type === "Trailer"
-    )
-  : null;
+  
 
     return(
 
@@ -77,7 +80,8 @@ function MovieDetails(){
         <div className="logo2" onClick={handleLogoClick}>
           <span className="highlight2">I</span>
           <span>nsta Pl</span>
-          <img src={playIcon} alt="play" className="logo-play2" />
+          <img src={playIcon} alt="play" className="logo-play2" 
+          />
           <span>y</span>
         </div>
       </header>
@@ -113,10 +117,8 @@ function MovieDetails(){
                 <img src={imageUrl} alt={movie.title} className="movie-image" />
                     <img src={playbtn}alt="playbutton" className="playbutton" 
                     onClick={() => {
-                      if(trailer){
-                        window.open(
-                            `https://www.youtube.com/watch?v=${trailer.key}`,"_blank"
-                        );
+                      if(trailerKey){
+                        setShowImage(true);
                       }
                       else{
                         toast.error("Trailer not available");
@@ -135,11 +137,15 @@ function MovieDetails(){
         <button className="close-btn" onClick={() => setShowImage(false)}>
             <img src={frame} alt="CloseButton" />
         </button>
-      <img
-        src={imageUrl}
-        alt={movie.title}
-        className="popup-image"
-      />
+      <iframe
+  width="900"
+  height="500"
+  src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1`}
+  title="Movie Trailer"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+></iframe>
     </div>
   </div>
 )}

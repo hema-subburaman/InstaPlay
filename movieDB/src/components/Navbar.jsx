@@ -8,11 +8,9 @@ import { SEARCH_API } from "../api/endpoint";
 function Navbar({setSearchResults}){
     const navigate = useNavigate();
     const handleLogout = () => {
-        localStorage.removeItem("token");
+        localStorage.clear();
         toast.success("Logout Successful");
-        setTimeout(() => {
-            navigate("/", {replace: true});
-        }, 1000);
+        navigate("/", {replace: true});
     };
 
     const [search, setSearch] = useState("");
@@ -28,6 +26,18 @@ function Navbar({setSearchResults}){
         }
     }
 
+    useEffect(() => {
+    const timer = setTimeout(() => {
+        if (search.trim()) {
+            getSearchDetails();
+        } else {
+            setSearchResults([]);
+        }
+    }, 500);
+
+    return () => clearTimeout(timer);
+    }, [search]);
+
     return (
         <nav className="navbar">
             <div className="logo">
@@ -42,7 +52,7 @@ function Navbar({setSearchResults}){
                 getSearchDetails();
             }}>
                 <input type="text" placeholder="Search movies" value={search} onChange={(e) => setSearch(e.target.value)}/>
-                <button className="search-btn" onClick={getSearchDetails}>
+                <button type="submit" className="search-btn">
                     <img src={searchIcon} alt="search"  />
                 </button>
             </form>

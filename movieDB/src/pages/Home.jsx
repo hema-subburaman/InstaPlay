@@ -12,19 +12,17 @@ function Home(){
    const [searchResults, setSearchResults] = useState([]);
     return(
         <div className="home">
-            {/* <Header /> */}
+            
             <Navbar setSearchResults = {setSearchResults}/>
             <Banner />
             <div className="content">
                 <h2>Trending</h2>
                 <MovieGrid
-  movies={Array.isArray(searchResults) && searchResults.length > 0
-    ? searchResults
-    : movies}
-  setMovies={setMovies}
-/>
-                
-                
+                    movies={Array.isArray(searchResults) && searchResults.length > 0
+                    ? searchResults
+                    : movies}
+                    setMovies={setMovies}
+                />
             </div>
         </div>
     );

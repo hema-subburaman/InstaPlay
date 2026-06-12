@@ -52,15 +52,18 @@ function Login() {
     if (!isValid) return;
 
   try {
-    console.log("working");
-    const token = localStorage.getItem("TOKEN");
+  const token = localStorage.getItem("TOKEN");
+  console.log("TOKEN:", token);
   const data = await loginUser(username, password,token);
-  console.log(data,"hema");
-  localStorage.setItem("LOGIN",data.success);
-  toast.success("Login Successful");
-
-  navigate("/home");
+  
+  if(data.success){
+    localStorage.setItem("LOGIN", "true");
+    toast.success("Login Successful");
+    navigate("/home", {replace: true});
+  }
   } catch (error) {
+      console.log(error.response?.data);
+    localStorage.removeItem("LOGIN");
   toast.error("Invalid Username or Password");
   }
   };
@@ -73,11 +76,24 @@ function Login() {
     }
     catch(error){
       console.log(error);
+      console.log(username);
+console.log(password);
+console.log(token);
+console.log(error.response.data);
     }
   }
+
   useEffect(() => {
-    getToken();
-  },[]);
+  getToken();
+}, []);
+  
+  useEffect(() => {
+  if (localStorage.getItem("LOGIN") === "true") {
+    navigate("/home", { replace: true });
+  }
+  
+}, []);
+    
   return (
     <>
       <Header />

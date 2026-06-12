@@ -98,7 +98,6 @@ body {
   object-fit: cover;
 }
 
-/* Content */
 
 .content {
   padding: 30px;
@@ -170,18 +169,37 @@ body {
 }
 
 .pagination span {
-  color: #9ea6b6;
+  color: #8f99ab;
   cursor: pointer;
+  /* font-size: 16px;
+  font-weight: 400;
+  position: relative; */
 }
 
-.pagination .active {
-  color: #ff6b5b;
+.active-page {
+  color: #FF6A63 !important;
+font-size: 18px;
+font-style: normal;
+font-weight: 500;
+line-height: 24px; 
+text-decoration-line: underline;
+text-decoration-style: solid;
+text-decoration-skip-ink: none;
+text-decoration-thickness: auto;
+text-underline-offset: auto;
+text-underline-position: from-font;
 }
 
-.pagination button {
-  background: transparent;
-  border: none;
-  cursor: pointer;
+.active-page::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -6px;
+  width: 12px;
+  height: 2px;
+  background: #ff6b6b;
+  border-radius: 2px;
 }
 
 .left,
@@ -190,6 +208,9 @@ body {
   height: 18px;
 }
 
+.arrow-img{
+  cursor: pointer;
+}
 
 @media screen and (max-width: 768px) {
   .navbar {

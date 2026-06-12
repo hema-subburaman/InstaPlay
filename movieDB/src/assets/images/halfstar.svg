@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="15" height="14" viewBox="0 0 15 14" fill="none">
+  <defs>
+    <clipPath id="half">
+      <rect x="0" y="0" width="7.5" height="14" />
+    </clipPath>
+  </defs>
+
+  <!-- Star outline -->
+  <path
+    d="M7.13293 0L8.81679 5.18237H14.2659L9.85747 8.38525L11.5413 13.5676L7.13293 10.3647L2.72455 13.5676L4.4084 8.38525L1.04904e-05 5.18237H5.44908L7.13293 0Z"
+    fill="white"
+    stroke="#FFE234"
+    stroke-width="1"
+  />
+
+  <!-- Left half fill -->
+  <path
+    d="M7.13293 0L8.81679 5.18237H14.2659L9.85747 8.38525L11.5413 13.5676L7.13293 10.3647L2.72455 13.5676L4.4084 8.38525L1.04904e-05 5.18237H5.44908L7.13293 0Z"
+    fill="#FFE234"
+    clip-path="url(#half)"
+  />
+</svg>

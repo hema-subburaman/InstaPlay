@@ -165,10 +165,7 @@ body {
   cursor: pointer;
 }
 
-.active-page{
-  color: #ff7a63;
-  font-weight: bold;
-}
+
 
 @media screen and (max-width: 768px) {
 
