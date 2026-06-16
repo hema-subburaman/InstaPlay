@@ -108,7 +108,13 @@ body {
   flex: 1;
 }
 
-
+.no-movies {
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-size: 24px;
+  margin-top: 50px;
+}
 
 .movie-image {
   width: 100%;

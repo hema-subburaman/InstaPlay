@@ -11,6 +11,8 @@ import frame from "../assets/images/Frame.svg";
 import popup from "../assets/images/popup.png";
 import axios from "axios";
 import { MOVIEDETAILS_API, VIDEO_API } from "../api/endpoint";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 function MovieDetails(){
   
@@ -20,6 +22,7 @@ function MovieDetails(){
     const {movieId} = useParams();
     const [videos, setVideos] = useState([]);
     const [trailerKey, setTrailerKey] = useState("");
+    const [loading, setLoading] = useState(true);
     const handleLogoClick = () => {
       const token = localStorage.getItem("token");
 
@@ -30,12 +33,17 @@ function MovieDetails(){
 
     const getMovieDetails = async() => {
       try{
+        setLoading(true);
+
         const response = await axios.get(`${MOVIEDETAILS_API}/${movieId}?api_key=d0605f7c77a7e9ffd22f6f77c12e0f8f&language=en-US`);
         
         setMovie(response.data);
       }
       catch(error){
         console.log("error");
+      }
+      finally{
+        setLoading(false);
       }
     }
 
@@ -64,15 +72,72 @@ function MovieDetails(){
       getMovieVideos();
     },[]);
 
-    if (!movie) {
-    return <h2>Loading...</h2>;
-   }
+    if (loading) {
+  return (
+    <div className="details-page">
+      <header className="navbar2">
+        <div className="logo2">
+          <span className="highlight2">I</span>
+          <span>nsta Pl</span>
+          <img
+            src={playIcon}
+            alt="play"
+            className="logo-play2"
+          />
+          <span>y</span>
+        </div>
+      </header>
+
+      <div className="movie-banner">
+        <div className="left-section">
+
+          <Skeleton
+            width={80}
+            height={40}
+          />
+
+          <div style={{ marginTop: "20px" }}>
+            <Skeleton
+              width={350}
+              height={45}
+            />
+          </div>
+
+          <div style={{ marginTop: "20px" }}>
+            <Skeleton
+              width={120}
+              height={25}
+            />
+          </div>
+
+          <div style={{ marginTop: "20px" }}>
+            <Skeleton count={5} />
+          </div>
+
+          <div style={{ marginTop: "20px" }}>
+            <Skeleton width={250} />
+          </div>
+
+          <div style={{ marginTop: "10px" }}>
+            <Skeleton width={220} />
+          </div>
+
+        </div>
+
+        <div className="right-section">
+          <Skeleton
+            width={350}
+            height={500}
+          />
+        </div>
+      </div>
+    </div>
+  );
+} 
 
   const imageUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
   
-
   
-
     return(
 
         <div className="details-page">

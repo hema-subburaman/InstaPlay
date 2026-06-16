@@ -1,42 +1,76 @@
 import playIcon from "../assets/playIcon.svg";
 import searchIcon from "../assets/searchIcon.svg";
 import { useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { SEARCH_API } from "../api/endpoint";
 function Navbar({setSearchResults}){
     const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [search, setSearch] = useState(
+    searchParams.get("search") || ""
+    );
     const handleLogout = () => {
         localStorage.clear();
         toast.success("Logout Successful");
         navigate("/", {replace: true});
     };
 
-    const [search, setSearch] = useState("");
+    const getSearchDetails = async () => {
+    if (!search.trim()) return;
 
-    const getSearchDetails = async() => {
-        if (!search.trim()) return;
-        try{
-            const response = await axios.get(`${SEARCH_API}&language=en-US&query=${search}&include_adult=false`);
-            setSearchResults(response.data.results || []);
-        }
-        catch(error){
-            console.log("error");
-        }
+    try {
+      const response = await axios.get(
+        `${SEARCH_API}&language=en-US&query=${search}&include_adult=false`
+      );
+
+      setSearchResults(response.data.results || []);
+
+      const currentSearch = searchParams.get("search");
+
+      setSearchParams({
+        page: currentSearch !== search ? 1 : searchParams.get("page")  || 1,
+        search,
+        
+      });
+    } catch (error) {
+      console.log(error);
     }
+    };
+
 
     useEffect(() => {
-    const timer = setTimeout(() => {
-        if (search.trim()) {
-            getSearchDetails();
-        } else {
-            setSearchResults([]);
-        }
-    }, 500);
+  const timer = setTimeout(async () => {
+    if (!search.trim()) {
+      setSearchResults([]);
+      setSearchParams({});
+      return;
+    }
 
-    return () => clearTimeout(timer);
-    }, [search]);
+    try {
+      const response = await axios.get(
+        `${SEARCH_API}&language=en-US&query=${search}&include_adult=false`
+      );
+
+      setSearchResults(response.data.results || []);
+      setSearchParams({search,});
+    } catch (error) {
+      console.log(error);
+    }
+  }, 300);
+
+  return () => clearTimeout(timer);
+}, [search]);
+
+   useEffect(() => {
+  if (!search.trim()) {
+    setSearchResults([]);
+
+    setSearchParams({});
+  }
+}, [search]);
 
     return (
         <nav className="navbar">

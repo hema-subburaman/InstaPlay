@@ -2,35 +2,36 @@ import leftoutlined from "../assets/images/leftoutlined.svg";
 import rightoutlined from "../assets/images/rightoutlined.svg";
 
 function Pagination({ page, setPage, totalPages }) {
+
   const getPages = () => {
-  const pages = [];
+    const pages = [];
 
-  if (page <= 3) {
-    pages.push(1, 2, 3, 4, 5, 6, "...");
-  } else {
-    pages.push(
-      "...",
-      page - 2,
-      page - 1,
-      page,
-      page + 1,
-      page + 2,
-      "..."
-    );
-  }
+    if (page <= 3) {
+      pages.push(1, 2, 3, 4, 5, 6, "...");
+    } else {
+      pages.push(
+        "...",
+        page - 2,
+        page - 1,
+        page,
+        page + 1,
+        page + 2,
+        "..."
+      );
+    }
 
-  return pages;
-};
+    return pages;
+  };
 
   return (
     <div className="pagination">
-  <img
-    src={leftoutlined}
-    alt="left"
-    className={`arrow-img ${page === 1 ? "disabled-arrow" : ""}`}
-    onClick={() => page > 1 && setPage(page - 1)}
-    
-  />
+
+      <img
+        src={leftoutlined}
+        alt="left"
+        className={`arrow-img ${page === 1 ? "disabled-arrow" : ""}`}
+        onClick={() => page > 1 && setPage(page - 1)}
+      />
 
       {getPages().map((item, index) => (
         <span
@@ -39,19 +40,23 @@ function Pagination({ page, setPage, totalPages }) {
             typeof item === "number" && setPage(item)
           }
           className={page === item ? "active-page" : ""}
-        
         >
           {item}
         </span>
       ))}
 
-     <img
-    src={rightoutlined}
-    alt="right"
-    className="arrow-img"
-    onClick={() => setPage(page + 1)}
-  />
-</div>
+      <img
+        src={rightoutlined}
+        alt="right"
+        className={`arrow-img ${
+          page === totalPages ? "disabled-arrow" : ""
+        }`}
+        onClick={() =>
+          page < totalPages && setPage(page + 1)
+        }
+      />
+
+    </div>
   );
 }
 

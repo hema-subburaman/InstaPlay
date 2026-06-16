@@ -15,6 +15,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleUsernameChange = (e) => {
   setUsername(e.target.value);
@@ -52,8 +53,8 @@ function Login() {
     if (!isValid) return;
 
   try {
+  setLoading(true);
   const token = localStorage.getItem("TOKEN");
-  console.log("TOKEN:", token);
   const data = await loginUser(username, password,token);
   
   if(data.success){
@@ -62,9 +63,10 @@ function Login() {
     navigate("/home", {replace: true});
   }
   } catch (error) {
-      console.log(error.response?.data);
     localStorage.removeItem("LOGIN");
   toast.error("Invalid Username or Password");
+  }finally{
+    setLoading(false);
   }
   };
 
@@ -76,10 +78,6 @@ function Login() {
     }
     catch(error){
       console.log(error);
-      console.log(username);
-console.log(password);
-console.log(token);
-console.log(error.response.data);
     }
   }
 
@@ -107,6 +105,7 @@ console.log(error.response.data);
           handleLogin={handleLogin}
           usernameError={usernameError}
           passwordError={passwordError}
+          loading = {loading}
         />
       </div>
     </>

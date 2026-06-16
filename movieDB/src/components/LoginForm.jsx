@@ -7,6 +7,7 @@ function LoginForm({
   handleLogin,
   usernameError,
   passwordError,
+  loading,
   error,
 }) {
   return (
@@ -41,8 +42,8 @@ function LoginForm({
       )}
       </div>
       {error && <p className="error-message">{error}</p>}
-      <button type="submit" >
-        LOG IN
+      <button type="submit"  disabled = {loading} className="login-btn">
+        {loading ? "LOGGING IN..." : "LOG IN"}
       </button>
     </form>
   );
