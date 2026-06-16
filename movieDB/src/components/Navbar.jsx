@@ -45,7 +45,7 @@ function Navbar({setSearchResults}){
   const timer = setTimeout(async () => {
     if (!search.trim()) {
       setSearchResults([]);
-      setSearchParams({});
+      
       return;
     }
 
@@ -67,8 +67,14 @@ function Navbar({setSearchResults}){
    useEffect(() => {
   if (!search.trim()) {
     setSearchResults([]);
-
-    setSearchParams({});
+    const page = searchParams.get("page");
+    if(page){
+      setSearchParams({
+        page,
+      });
+    }else{
+      setSearchParams({});
+    }
   }
 }, [search]);
 
