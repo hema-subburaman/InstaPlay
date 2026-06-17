@@ -11,33 +11,13 @@ import { useSearchParams } from "react-router-dom";
 import "../styles/Home.css";
 function Home(){
    const [movies, setMovies] = useState([]);
-   const [searchResults, setSearchResults] = useState([]);
    const [searchParams] = useSearchParams();
    const search = searchParams.get("search") || "";
-   useEffect(() => {
   
-  const page = searchParams.get("page") || 1;
-
-  if (!search) return;
-
-  const fetchSearchMovies = async () => {
-    try {
-      const response = await axios.get(
-        `${SEARCH_API}&language=en-US&query=${search}&page=${page}&include_adult=false`
-      );
-
-      setSearchResults(response.data.results || []);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  fetchSearchMovies();
-  }, [searchParams]);
     return(
         <div className="home">
             
-            <Navbar setSearchResults = {setSearchResults}/>
+            <Navbar />
             <Banner />
             <div className="content">
                 <h2>
@@ -50,11 +30,9 @@ function Home(){
                   )}
                 </h2>
                 <MovieGrid
-                    movies={Array.isArray(searchResults) && searchResults.length > 0
-                    ? searchResults
-                    : movies}
-                    setMovies={setMovies}
-                />
+  movies={movies}
+  setMovies={setMovies}
+/>
             </div>
         </div>
     );

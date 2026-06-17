@@ -4,83 +4,51 @@ import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { SEARCH_API } from "../api/endpoint";
-function Navbar({setSearchResults}){
+
+function Navbar(){
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
-    const [search, setSearch] = useState(
+    
+   const [search, setSearch] =  useState(
+    
     searchParams.get("search") || ""
-    );
+   );
+  
+    
     const handleLogout = () => {
         localStorage.clear();
         toast.success("Logout Successful");
         navigate("/", {replace: true});
     };
 
-    const getSearchDetails = async () => {
-    if (!search.trim()) return;
+  useEffect(() => {
+  const timer = setTimeout(() => {
+    const currentSearch =
+      searchParams.get("search") || "";
 
-    try {
-      const response = await axios.get(
-        `${SEARCH_API}&language=en-US&query=${search}&include_adult=false`
-      );
-
-      setSearchResults(response.data.results || []);
-
-      const currentSearch = searchParams.get("search");
-
-      setSearchParams({
-        page: currentSearch !== search ? 1 : searchParams.get("page")  || 1,
-        search,
-        
-      });
-    } catch (error) {
-      console.log(error);
-    }
-    };
-
-
-    useEffect(() => {
-  const timer = setTimeout(async () => {
-    if (!search.trim()) {
-      setSearchResults([]);
-      
+    if (search === currentSearch) {
       return;
     }
 
-    try {
-      const response = await axios.get(
-        `${SEARCH_API}&language=en-US&query=${search}&include_adult=false`
-      );
+    if (!search.trim()) {
+      const page =
+        searchParams.get("page") || 1;
 
-      setSearchResults(response.data.results || []);
-      const currentPage = searchParams.get("page") || 1;
-      setSearchParams({
-        page: currentPage,
-        search,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }, 300);
-
-  return () => clearTimeout(timer);
-}, [search]);
-
-   useEffect(() => {
-  if (!search.trim()) {
-    setSearchResults([]);
-    const page = searchParams.get("page");
-    if(page){
       setSearchParams({
         page,
       });
-    }else{
-      setSearchParams({});
+
+      return;
     }
-  }
-}, [search]);
+
+    setSearchParams({
+      search,
+      page: 1,
+    });
+  }, 300);
+
+  return () => clearTimeout(timer);
+  }, [search]);
 
     return (
         <nav className="navbar">
@@ -93,7 +61,11 @@ function Navbar({setSearchResults}){
 
             <form className="search-box" onSubmit={(e) => {
                 e.preventDefault();
-                getSearchDetails();
+                setSearchParams({
+                  page: 1,
+                  search,
+                  
+                });
             }}>
                 <input type="text" placeholder="Search movies" value={search} onChange={(e) => setSearch(e.target.value)}/>
                 <button type="submit" className="search-btn">
