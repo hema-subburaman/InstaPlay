@@ -55,7 +55,11 @@ function Navbar({setSearchResults}){
       );
 
       setSearchResults(response.data.results || []);
-      setSearchParams({search,});
+      const currentPage = searchParams.get("page") || 1;
+      setSearchParams({
+        page: currentPage,
+        search,
+      });
     } catch (error) {
       console.log(error);
     }
