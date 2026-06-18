@@ -9,12 +9,11 @@ import placeholder_image from "../assets/images/placeholder_image.jpeg";
 function MovieCard({movieId, image, title, rating, stars}){
     const navigate = useNavigate();
     const renderStars = (rating) => {
-  const stars = [];
+    const stars = [];
 
-  const roundedRating = Math.round(rating * 2) / 2;
 
-  const fullStars = Math.floor(roundedRating);
-  const hasHalfStar = roundedRating % 1 !== 0;
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 !== 0;
 
   for (let i = 0; i < fullStars; i++) {
     stars.push(

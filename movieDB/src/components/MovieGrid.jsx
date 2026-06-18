@@ -76,7 +76,7 @@ function MovieGrid({ movies, setMovies }) {
         <Skeleton height={15} width={80} />
       </div>
     ))
-  ) : (
+  ) : movies.length > 0 ? (
     movies.map((movie) => {
       
       const imageUrl = movie.poster_path && movie.poster_path !== "null"
@@ -96,7 +96,11 @@ function MovieGrid({ movies, setMovies }) {
         />
       );
     })
-  )}
+  ) : (
+  <div className="no-movies">
+    <h2>No Movies Found 🎬</h2>
+  </div>
+) }
 </div>
       {!loading && movies.length > 0 && (
         <Pagination

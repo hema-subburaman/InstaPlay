@@ -30,9 +30,9 @@ function Home(){
                   )}
                 </h2>
                 <MovieGrid
-  movies={movies}
-  setMovies={setMovies}
-/>
+                movies={movies}
+                setMovies={setMovies}
+                />
             </div>
         </div>
     );
