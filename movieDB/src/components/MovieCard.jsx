@@ -4,6 +4,8 @@ import playbtn from "../assets/images/playbtn.svg";
 import halfStar from "../assets/images/halfStar.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import placeholder_image from "../assets/images/placeholder_image.jpeg";
+
 function MovieCard({movieId, image, title, rating, stars}){
     const navigate = useNavigate();
     const renderStars = (rating) => {
@@ -42,7 +44,12 @@ function MovieCard({movieId, image, title, rating, stars}){
         <div className="movie-card" onClick={() => 
         navigate(
             `/movie/${movieId}`)}>
-        <img src={image} alt={title} />
+        <img src={image} alt={title}  
+        onError={(e) => {
+        e.target.onerror = null;
+        e.target.src = placeholder_image ;
+  }}
+  />
         <div className="movie-info">
             <h4>{title}</h4>
             <div className="rating-row">

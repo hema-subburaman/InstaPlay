@@ -6,8 +6,10 @@ import axios from "axios";
 import Pagination from "./Pagination";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import placeholder_image from "../assets/images/placeholder_image.jpeg";
 
 function MovieGrid({ movies, setMovies }) {
+  
   const [loading, setLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -49,7 +51,7 @@ function MovieGrid({ movies, setMovies }) {
           `${MOVIE_API}&page=${page}`
         );
       }
-
+      
       setMovies(response.data.results || []);
       setTotalPages(response.data.total_pages || 1);
     } catch (error) {
@@ -62,7 +64,7 @@ function MovieGrid({ movies, setMovies }) {
   useEffect(() => {
     getMovies();
   }, [page, search]);
-
+  
   return (
     <>
       <div className="movie-grid">
@@ -76,7 +78,11 @@ function MovieGrid({ movies, setMovies }) {
     ))
   ) : (
     movies.map((movie) => {
-      const imageUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+      
+      const imageUrl = movie.poster_path && movie.poster_path !== "null"
+      ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 
+         placeholder_image;
+         
 
       return (
         <MovieCard
@@ -86,6 +92,7 @@ function MovieGrid({ movies, setMovies }) {
           image={imageUrl}
           rating={movie.vote_average / 2}
           releaseDate={movie.release_date}
+          
         />
       );
     })
