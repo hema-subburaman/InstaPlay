@@ -11,11 +11,15 @@ function Pagination({ page, setPage, totalPages }) {
     } else {
       pages.push(
         "...",
+        page - 4,
+        page - 3,
         page - 2,
         page - 1,
         page,
         page + 1,
         page + 2,
+        page + 3,
+        page + 4,
         "..."
       );
     }
