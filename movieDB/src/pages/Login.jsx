@@ -1,40 +1,53 @@
+import { useEffect, useState } from "react";
+
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import axios from "axios";
+
 import Header from "../components/Header";
 import LoginForm from "../components/LoginForm";
-import "../styles/Login.css";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
+
 import { loginUser } from "../api/auth";
-import axios from "axios";
 import { TOKEN_API } from "../api/endpoint";
 
-function Login() {
-  const navigate = useNavigate();
+import "../styles/Login.css";
 
+function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleUsernameChange = (e) => {
-  setUsername(e.target.value);
+  const navigate = useNavigate();
 
-  if (usernameError) {
-    setUsernameError("");
-  }
+  useEffect(() => {
+    getToken();
+  }, []);
+
+  useEffect(() => {
+    if (localStorage.getItem("LOGIN") === "true") {
+      navigate("/home", { replace: true });
+    }
+  }, []);
+
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+
+    if (usernameError) {
+      setUsernameError("");
+    }
   };
 
   const handlePasswordChange = (e) => {
-  setPassword(e.target.value);
+    setPassword(e.target.value);
 
-  if (passwordError) {
-    setPasswordError("");
-  }
+    if (passwordError) {
+      setPasswordError("");
+    }
   };
 
-
-  const handleLogin = async() => {
+  const handleLogin = async () => {
     setUsernameError("");
     setPasswordError("");
 
@@ -52,46 +65,33 @@ function Login() {
 
     if (!isValid) return;
 
-  try {
-  setLoading(true);
-  const token = localStorage.getItem("TOKEN");
-  const data = await loginUser(username, password,token);
-  
-  if(data.success){
-    localStorage.setItem("LOGIN", "true");
-    toast.success("Login Successful");
-    navigate("/home", {replace: true});
-  }
-  } catch (error) {
-    localStorage.removeItem("LOGIN");
-  toast.error("Invalid Username or Password");
-  }finally{
-    setLoading(false);
-  }
+    try {
+      setLoading(true);
+      const token = localStorage.getItem("TOKEN");
+      const data = await loginUser(username, password, token);
+
+      if (data.success) {
+        localStorage.setItem("LOGIN", "true");
+        toast.success("Login Successful");
+        navigate("/home", { replace: true });
+      }
+    } catch (error) {
+      localStorage.removeItem("LOGIN");
+      toast.error("Invalid Username or Password");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const getToken = async() => {
-    try{
+  const getToken = async () => {
+    try {
       const response = await axios.get(TOKEN_API);
-    console.log(response.data.request_token);
-    localStorage.setItem("TOKEN",response.data.request_token);
-    }
-    catch(error){
+      localStorage.setItem("TOKEN", response.data.request_token);
+    } catch (error) {
       console.log(error);
     }
-  }
+  };
 
-  useEffect(() => {
-  getToken();
-}, []);
-  
-  useEffect(() => {
-  if (localStorage.getItem("LOGIN") === "true") {
-    navigate("/home", { replace: true });
-  }
-  
-}, []);
-    
   return (
     <>
       <Header />
@@ -105,7 +105,7 @@ function Login() {
           handleLogin={handleLogin}
           usernameError={usernameError}
           passwordError={passwordError}
-          loading = {loading}
+          loading={loading}
         />
       </div>
     </>

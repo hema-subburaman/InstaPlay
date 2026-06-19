@@ -2,7 +2,6 @@ import leftoutlined from "../assets/images/leftoutlined.svg";
 import rightoutlined from "../assets/images/rightoutlined.svg";
 
 function Pagination({ page, setPage, totalPages }) {
-
   const getPages = () => {
     const pages = [];
 
@@ -20,7 +19,7 @@ function Pagination({ page, setPage, totalPages }) {
         page + 2,
         page + 3,
         page + 4,
-        "..."
+        "...",
       );
     }
 
@@ -29,7 +28,6 @@ function Pagination({ page, setPage, totalPages }) {
 
   return (
     <div className="pagination">
-
       <img
         src={leftoutlined}
         alt="left"
@@ -40,9 +38,7 @@ function Pagination({ page, setPage, totalPages }) {
       {getPages().map((item, index) => (
         <span
           key={index}
-          onClick={() =>
-            typeof item === "number" && setPage(item)
-          }
+          onClick={() => typeof item === "number" && setPage(item)}
           className={page === item ? "active-page" : ""}
         >
           {item}
@@ -52,14 +48,9 @@ function Pagination({ page, setPage, totalPages }) {
       <img
         src={rightoutlined}
         alt="right"
-        className={`arrow-img ${
-          page === totalPages ? "disabled-arrow" : ""
-        }`}
-        onClick={() =>
-          page < totalPages && setPage(page + 1)
-        }
+        className={`arrow-img ${page === totalPages ? "disabled-arrow" : ""}`}
+        onClick={() => page < totalPages && setPage(page + 1)}
       />
-
     </div>
   );
 }

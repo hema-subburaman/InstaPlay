@@ -1,15 +1,18 @@
-import MovieCard from "./MovieCard";
 import { useEffect, useState } from "react";
+
 import { useSearchParams } from "react-router-dom";
-import { MOVIE_API, SEARCH_API } from "../api/endpoint";
 import axios from "axios";
-import Pagination from "./Pagination";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+
+import MovieCard from "./MovieCard";
+import Pagination from "./Pagination";
+
+import { MOVIE_API, SEARCH_API } from "../api/endpoint";
+
 import placeholder_image from "../assets/images/placeholder_image.jpeg";
 
 function MovieGrid({ movies, setMovies }) {
-  
   const [loading, setLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -17,6 +20,10 @@ function MovieGrid({ movies, setMovies }) {
 
   const page = Number(searchParams.get("page")) || 1;
   const search = searchParams.get("search") || "";
+
+  useEffect(() => {
+    getMovies();
+  }, [page, search]);
 
   const handlePageChange = (newPage) => {
     window.scrollTo({
@@ -44,14 +51,12 @@ function MovieGrid({ movies, setMovies }) {
 
       if (search) {
         response = await axios.get(
-          `${SEARCH_API}&language=en-US&query=${search}&page=${page}&include_adult=false`
+          `${SEARCH_API}&language=en-US&query=${search}&page=${page}&include_adult=false`,
         );
       } else {
-        response = await axios.get(
-          `${MOVIE_API}&page=${page}`
-        );
+        response = await axios.get(`${MOVIE_API}&page=${page}`);
       }
-      
+
       setMovies(response.data.results || []);
       setTotalPages(response.data.total_pages || 1);
     } catch (error) {
@@ -61,47 +66,41 @@ function MovieGrid({ movies, setMovies }) {
     }
   };
 
-  useEffect(() => {
-    getMovies();
-  }, [page, search]);
-  
   return (
     <>
       <div className="movie-grid">
-  {loading ? (
-    Array.from({ length: 12 }).map((_, index) => (
-      <div key={index} className="movie-card">
-        <Skeleton height={250} />
-        <Skeleton height={20} style={{ marginTop: "10px" }} />
-        <Skeleton height={15} width={80} />
-      </div>
-    ))
-  ) : movies.length > 0 ? (
-    movies.map((movie) => {
-      
-      const imageUrl = movie.poster_path && movie.poster_path !== "null"
-      ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : 
-         placeholder_image;
-         
+        {loading ? (
+          Array.from({ length: 12 }).map((_, index) => (
+            <div key={index} className="movie-card">
+              <Skeleton height={250} />
+              <Skeleton height={20} style={{ marginTop: "10px" }} />
+              <Skeleton height={15} width={80} />
+            </div>
+          ))
+        ) : movies.length > 0 ? (
+          movies.map((movie) => {
+            const imageUrl =
+              movie.poster_path && movie.poster_path !== "null"
+                ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                : placeholder_image;
 
-      return (
-        <MovieCard
-          key={movie.id}
-          movieId={movie.id}
-          title={movie.title}
-          image={imageUrl}
-          rating={movie.vote_average / 2}
-          releaseDate={movie.release_date}
-          
-        />
-      );
-    })
-  ) : (
-  <div className="no-movies">
-    <h2>No Movies Found 🎬</h2>
-  </div>
-) }
-</div>
+            return (
+              <MovieCard
+                key={movie.id}
+                movieId={movie.id}
+                title={movie.title}
+                image={imageUrl}
+                rating={movie.vote_average / 2}
+                releaseDate={movie.release_date}
+              />
+            );
+          })
+        ) : (
+          <div className="no-movies">
+            <h2>No Movies Found 🎬</h2>
+          </div>
+        )}
+      </div>
       {!loading && movies.length > 0 && (
         <Pagination
           page={page}
