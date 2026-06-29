@@ -31,16 +31,19 @@ function MovieGrid({ movies, setMovies }) {
       behavior: "smooth",
     });
 
-    if (search) {
-      setSearchParams({
-        page: newPage,
-        search,
-      });
-    } else {
-      setSearchParams({
-        page: newPage,
-      });
-    }
+    // if (search) {
+    //   setSearchParams({
+    //     page: newPage,
+    //     search,
+    //   });
+    // } else {
+    //   setSearchParams({
+    //     page: newPage,
+    //   });
+    // }
+    setSearchParams({
+      page: newPage,
+    });
   };
 
   const getMovies = async () => {
@@ -49,16 +52,16 @@ function MovieGrid({ movies, setMovies }) {
 
       let response;
 
-      if (search) {
-        response = await axios.get(
-          `${SEARCH_API}&language=en-US&query=${search}&page=${page}&include_adult=false`,
-        );
-      } else {
-        response = await axios.get(`${MOVIE_API}&page=${page}`);
-      }
+      // if (search) {
+      //   response = await axios.get(
+      //     `${SEARCH_API}&language=en-US&query=${search}&page=${page}&include_adult=false`,
+      //   );
+      // } else {
+      response = await axios.get(`${MOVIE_API}?page=${page}`);
+      // }
 
-      setMovies(response.data.results || []);
-      setTotalPages(response.data.total_pages || 1);
+      setMovies(response.data.data || []);
+      setTotalPages(response.data.totalPages);
     } catch (error) {
       console.log(error);
     } finally {
@@ -105,7 +108,7 @@ function MovieGrid({ movies, setMovies }) {
         <Pagination
           page={page}
           setPage={handlePageChange}
-          totalPages={Math.min(totalPages, 500)}
+          totalPages={totalPages}
         />
       )}
     </>

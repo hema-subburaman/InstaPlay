@@ -5,24 +5,27 @@ function Pagination({ page, setPage, totalPages }) {
   const getPages = () => {
     const pages = [];
 
-    if (page <= 3) {
-      pages.push(1, 2, 3, 4, 5, 6, "...");
-    } else {
-      pages.push(
-        "...",
-        page - 4,
-        page - 3,
-        page - 2,
-        page - 1,
-        page,
-        page + 1,
-        page + 2,
-        page + 3,
-        page + 4,
-        "...",
-      );
-    }
+    // if (page <= 3) {
+    //   pages.push(1, 2, 3, 4, 5, 6, "...");
+    // } else {
+    //   pages.push(
+    //     "...",
+    //     page - 4,
+    //     page - 3,
+    //     page - 2,
+    //     page - 1,
+    //     page,
+    //     page + 1,
+    //     page + 2,
+    //     page + 3,
+    //     page + 4,
+    //     "...",
+    //   );
+    // }
 
+    for (let i = 1; i <= totalPages; i++) {
+      pages.push(i);
+    }
     return pages;
   };
 
