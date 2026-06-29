@@ -7,8 +7,8 @@ import playIcon from "../assets/playIcon.svg";
 import searchIcon from "../assets/searchIcon.svg";
 
 function Navbar() {
-  const [search, setSearch] = useState(searchParams.get("search") || "");
   const [searchParams, setSearchParams] = useSearchParams();
+  const [search, setSearch] = useState(searchParams.get("search") || "");
 
   const navigate = useNavigate();
 
