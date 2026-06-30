@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://jwt-authentication-kfpk.onrender.com";
 
 const VERSION = "3";
 
