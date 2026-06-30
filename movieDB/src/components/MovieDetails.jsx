@@ -47,10 +47,11 @@ function MovieDetails() {
       setLoading(true);
 
       const response = await axios.get(
-        `${MOVIEDETAILS_API}/${movieId}?api_key=d0605f7c77a7e9ffd22f6f77c12e0f8f&language=en-US`,
+        `${MOVIEDETAILS_API}/${movieId}`,
+        // ?api_key=d0605f7c77a7e9ffd22f6f77c12e0f8f&language=en-US`,
       );
 
-      setMovie(response.data);
+      setMovie(response.data.data);
     } catch (error) {
       console.log("error");
     } finally {
@@ -61,11 +62,14 @@ function MovieDetails() {
   const getMovieVideos = async () => {
     try {
       const response = await axios.get(
-        `${VIDEO_API}${movieId}/videos?api_key=d0605f7c77a7e9ffd22f6f77c12e0f8f&language=en-US`,
+        `${VIDEO_API}/${movieId}/videos`,
+        // ?api_key=d0605f7c77a7e9ffd22f6f77c12e0f8f&language=en-US`,
       );
 
-      setVideos(response.data.results);
-      const trailer = response.data.results.find(
+      const videoResults = response.data.data.results;
+
+      setVideos(videoResults);
+      const trailer = videoResults.find(
         (video) => video.site === "YouTube" && video.type === "Trailer",
       );
 

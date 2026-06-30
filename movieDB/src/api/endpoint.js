@@ -10,8 +10,8 @@ export const LOGIN_API = `${BASE_URL}/${VERSION}/authentication/token/validate_w
 
 export const MOVIE_API = `${RENDER_URL}/movies`;
 
-export const MOVIEDETAILS_API = `${BASE_URL}/${VERSION}/movie`;
+export const MOVIEDETAILS_API = `${RENDER_URL}/movies`;
 
 export const SEARCH_API = `${BASE_URL}/${VERSION}/search/movie?api_key=d0605f7c77a7e9ffd22f6f77c12e0f8f`;
 
-export const VIDEO_API = `${MOVIEDETAILS_API}/`;
+export const VIDEO_API = `${RENDER_URL}/movies`;
