@@ -41,27 +41,35 @@ function MovieGrid({ movies, setMovies }) {
         page: newPage,
       });
     }
-    setSearchParams({
-      page: newPage,
-    });
   };
 
   const getMovies = async () => {
     try {
       setLoading(true);
 
+      const token = localStorage.getItem("TOKEN");
+
       let response;
 
       if (search) {
         response = await axios.get(
           `${SEARCH_API}?query=${search}&page=${page}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
         );
       } else {
-        response = await axios.get(`${MOVIE_API}?page=${page}`);
+        response = await axios.get(`${MOVIE_API}?page=${page}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
       }
 
       setMovies(response.data.data || []);
-      setTotalPages(response.data.totalPages);
+      setTotalPages(response.data.totalPages || 1);
     } catch (error) {
       console.log(error);
     } finally {

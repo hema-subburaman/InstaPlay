@@ -8,7 +8,6 @@ import Header from "../components/Header";
 import LoginForm from "../components/LoginForm";
 
 import { loginUser } from "../api/auth";
-import { TOKEN_API } from "../api/endpoint";
 
 import "../styles/Login.css";
 
@@ -22,14 +21,10 @@ function Login() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getToken();
-  }, []);
-
-  useEffect(() => {
     if (localStorage.getItem("LOGIN") === "true") {
       navigate("/home", { replace: true });
     }
-  }, []);
+  }, [navigate]);
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -67,28 +62,24 @@ function Login() {
 
     try {
       setLoading(true);
-      const token = localStorage.getItem("TOKEN");
-      const data = await loginUser(username, password, token);
+
+      const data = await loginUser(username, password);
 
       if (data.success) {
         localStorage.setItem("LOGIN", "true");
+
+        if (data.token) {
+          localStorage.setItem("TOKEN", data.token);
+        }
         toast.success("Login Successful");
         navigate("/home", { replace: true });
       }
     } catch (error) {
       localStorage.removeItem("LOGIN");
+      localStorage.removeItem("TOKEN");
       toast.error("Invalid Username or Password");
     } finally {
       setLoading(false);
-    }
-  };
-
-  const getToken = async () => {
-    try {
-      const response = await axios.get(TOKEN_API);
-      localStorage.setItem("TOKEN", response.data.request_token);
-    } catch (error) {
-      console.log(error);
     }
   };
 

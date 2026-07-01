@@ -1,6 +1,4 @@
-import { useEffect } from "react";
-
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
 import MovieDetails from "./components/MovieDetails";
@@ -8,6 +6,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 import Login from "./pages/Login";
 import Home from "./pages/Home";
+import Signup from "./pages/Signup";
 
 function App() {
   return (
@@ -16,6 +15,9 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Login />} />
+
+        <Route path="/register" element={<Signup />} />
+
         <Route
           path="/home"
           element={

@@ -1,57 +1,80 @@
 import { useNavigate } from "react-router-dom";
 
-function LoginForm({
+function SignupForm({
   username,
   password,
-  handleUsernameChange,
-  handlePasswordChange,
-  handleLogin,
+  confirmPassword,
+  setUsername,
+  setPassword,
+  setConfirmPassword,
   usernameError,
   passwordError,
+  confirmPasswordError,
+  handleRegister,
   loading,
   error,
 }) {
   const navigate = useNavigate();
+
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        handleLogin();
+        handleRegister();
       }}
       className="login-card"
     >
-      <h1>Sign in</h1>
-      <p>Sign in to your Self Service Portal</p>
+      <h1>Sign Up</h1>
+
+      <p>Create your InstaPlay account</p>
+
       <div className="input-group">
         <input
           type="text"
           placeholder="Username"
           value={username}
-          onChange={handleUsernameChange}
+          onChange={(e) => setUsername(e.target.value)}
         />
 
         {usernameError && <p className="error-text">{usernameError}</p>}
       </div>
+
       <div className="input-group">
         <input
           type="password"
           placeholder="Password"
           value={password}
-          onChange={handlePasswordChange}
+          onChange={(e) => setPassword(e.target.value)}
         />
 
         {passwordError && <p className="error-text">{passwordError}</p>}
       </div>
+
+      <div className="input-group">
+        <input
+          type="password"
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
+
+        {confirmPasswordError && (
+          <p className="error-text">{confirmPasswordError}</p>
+        )}
+      </div>
+
       {error && <p className="error-message">{error}</p>}
+
       <button type="submit" disabled={loading} className="login-btn">
-        {loading ? "LOGGING IN..." : "LOG IN"}
+        {loading ? "REGISTERING..." : "REGISTER"}
       </button>
+
       <p className="login-link">
-        Don't have an account?{" "}
-        <span onClick={() => navigate("/register")}>Sign Up</span>
+        Already have an account?{" "}
+        <span onClick={() => navigate("/")}>Sign In</span>
       </p>
     </form>
   );
 }
 
-export default LoginForm;
+export default SignupForm;
