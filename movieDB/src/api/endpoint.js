@@ -12,6 +12,6 @@ export const MOVIE_API = `${RENDER_URL}/movies`;
 
 export const MOVIEDETAILS_API = `${RENDER_URL}/movies`;
 
-export const SEARCH_API = `${BASE_URL}/${VERSION}/search/movie?api_key=d0605f7c77a7e9ffd22f6f77c12e0f8f`;
+export const SEARCH_API = `${RENDER_URL}/search/movies`;
 
 export const VIDEO_API = `${RENDER_URL}/movies`;
