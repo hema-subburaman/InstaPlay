@@ -12,6 +12,6 @@ export const MOVIE_API = `${RENDER_URL}/movies`;
 
 export const MOVIEDETAILS_API = `${RENDER_URL}/movies`;
 
-export const SEARCH_API = `${RENDER_URL}/search/movies`;
+export const SEARCH_API = `${RENDER_URL}/movies/search`;
 
 export const VIDEO_API = `${RENDER_URL}/movies`;

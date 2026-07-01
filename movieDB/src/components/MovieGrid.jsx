@@ -54,7 +54,7 @@ function MovieGrid({ movies, setMovies }) {
 
       if (search) {
         response = await axios.get(
-          `${SEARCH_API}&query=${search}&page=${page}`,
+          `${SEARCH_API}?query=${search}&page=${page}`,
         );
       } else {
         response = await axios.get(`${MOVIE_API}?page=${page}`);

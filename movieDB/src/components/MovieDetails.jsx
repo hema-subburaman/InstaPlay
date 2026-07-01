@@ -31,7 +31,6 @@ function MovieDetails() {
 
   useEffect(() => {
     getMovieDetails();
-    getMovieVideos();
   }, []);
 
   const handleLogoClick = () => {
@@ -68,16 +67,17 @@ function MovieDetails() {
 
       const videoResults = response.data.data.results;
 
-      setVideos(videoResults);
+      // setVideos(videoResults);
       const trailer = videoResults.find(
         (video) => video.site === "YouTube" && video.type === "Trailer",
       );
 
-      if (trailer) {
-        setTrailerKey(trailer.key);
-      }
+      // if (trailer) {
+      //   setTrailerKey(trailer.key);
+      // }
+      return trailer;
     } catch (error) {
-      console.log("error");
+      console.log(error);
     }
   };
 
@@ -169,12 +169,15 @@ function MovieDetails() {
             src={playbtn}
             alt="playbutton"
             className="playbutton"
-            onClick={() => {
-              if (trailerKey) {
-                setShowImage(true);
-              } else {
+            onClick={async () => {
+              const trailer = await getMovieVideos();
+
+              if (!trailer) {
                 toast.error("Trailer not available");
+                return;
               }
+
+              setTrailerKey(trailer.key);
               toast.success(`Opening ${movie.title}...`);
               setShowImage(true);
             }}
