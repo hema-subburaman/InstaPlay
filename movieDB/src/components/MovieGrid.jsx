@@ -43,9 +43,7 @@ function MovieGrid({ movies, setMovies }) {
     }
     setSearchParams({
       page: newPage,
-    
     });
-    if()
   };
 
   const getMovies = async () => {
