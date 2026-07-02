@@ -118,6 +118,33 @@ body {
   text-decoration: underline;
 }
 
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-wrapper input {
+  width: 100%;
+  box-sizing: border-box;
+  padding-right: 45px;
+}
+
+.eye-icon {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #666;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+}
+
+.eye-icon:hover {
+  color: #ff6b5b;
+}
+
 @media screen and (max-width: 768px) {
   .header {
     justify-content: center;

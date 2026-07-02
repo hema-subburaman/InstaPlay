@@ -79,17 +79,19 @@ function MovieGrid({ movies, setMovies }) {
 
   return (
     <>
-      <div className="movie-grid">
-        {loading ? (
-          Array.from({ length: 12 }).map((_, index) => (
+      {loading ? (
+        <div className="movie-grid">
+          {Array.from({ length: 12 }).map((_, index) => (
             <div key={index} className="movie-card">
               <Skeleton height={250} />
               <Skeleton height={20} style={{ marginTop: "10px" }} />
               <Skeleton height={15} width={80} />
             </div>
-          ))
-        ) : movies.length > 0 ? (
-          movies.map((movie) => {
+          ))}
+        </div>
+      ) : movies.length > 0 ? (
+        <div className="movie-grid">
+          {movies.map((movie) => {
             const imageUrl =
               movie.poster_path && movie.poster_path !== "null"
                 ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
@@ -105,13 +107,15 @@ function MovieGrid({ movies, setMovies }) {
                 releaseDate={movie.release_date}
               />
             );
-          })
-        ) : (
-          <div className="no-movies">
-            <h2>No Movies Found 🎬</h2>
-          </div>
-        )}
-      </div>
+          })}
+        </div>
+      ) : (
+        <div className="no-movies">
+          <h2>
+            No Movies Found <span className="movie-icon">🎬</span>
+          </h2>
+        </div>
+      )}
       {!loading && movies.length > 0 && (
         <Pagination
           page={page}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { replace, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { SignupUser } from "../api/auth";
 import { toast } from "react-hot-toast";
 import Header from "../components/Header";
@@ -61,9 +61,37 @@ function Signup() {
         navigate("/", { replace: true });
       }
     } catch (error) {
-      toast.error(error.respone?.data?.message || "Registration Failed");
+      toast.error(error.response?.data?.message || "Registration Failed");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+
+    if (usernameError) {
+      setUsernameError("");
+    }
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+
+    if (passwordError) {
+      setPasswordError("");
+    }
+
+    if (confirmPasswordError) {
+      setConfirmPasswordError("");
+    }
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+
+    if (confirmPasswordError) {
+      setConfirmPasswordError("");
     }
   };
 
@@ -83,6 +111,9 @@ function Signup() {
           passwordError={passwordError}
           confirmPasswordError={confirmPasswordError}
           handleRegister={handleRegister}
+          handleUsernameChange={handleUsernameChange}
+          handlePasswordChange={handlePasswordChange}
+          handleConfirmPasswordChange={handleConfirmPasswordChange}
           loading={loading}
         />
       </div>

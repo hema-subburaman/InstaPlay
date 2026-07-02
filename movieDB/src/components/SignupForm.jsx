@@ -1,20 +1,26 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 function SignupForm({
   username,
   password,
   confirmPassword,
-  setUsername,
-  setPassword,
-  setConfirmPassword,
   usernameError,
   passwordError,
   confirmPasswordError,
   handleRegister,
+  handleUsernameChange,
+  handlePasswordChange,
+  handleConfirmPasswordChange,
   loading,
   error,
 }) {
   const navigate = useNavigate();
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   return (
     <form
@@ -33,31 +39,47 @@ function SignupForm({
           type="text"
           placeholder="Username"
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={handleUsernameChange}
         />
 
         {usernameError && <p className="error-text">{usernameError}</p>}
       </div>
 
       <div className="input-group">
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <div className="password-wrapper">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Password"
+            value={password}
+            onChange={handlePasswordChange}
+          />
 
+          <span
+            className="eye-icon"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
         {passwordError && <p className="error-text">{passwordError}</p>}
       </div>
 
       <div className="input-group">
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        />
+        <div className="password-wrapper">
+          <input
+            type={showConfirmPassword ? "text" : "password"}
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={handleConfirmPasswordChange}
+          />
 
+          <span
+            className="eye-icon"
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+          >
+            {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
         {confirmPasswordError && (
           <p className="error-text">{confirmPasswordError}</p>
         )}
